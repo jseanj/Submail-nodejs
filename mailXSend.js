@@ -1,7 +1,6 @@
-var fs = require('fs');
 var Mail = require('./mail.js');
 
-function MailSend() {
+function MailXSend() {
     this.to = [];
     this.toName = [];
     this.from = '';
@@ -13,11 +12,9 @@ function MailSend() {
     this.bccName = [];
     this.reply = '';
     this.subject = '';
-    this.text = '';
-    this.html = '';
+    this.project = '';
     this.vars = {};
     this.links = {};
-    this.attachments = [];
     this.headers = {};
 
     // set email
@@ -65,12 +62,8 @@ function MailSend() {
         this.subject = subject;
     };
 
-    this.set_text = function(text) {
-        this.text = text;
-    };
-
-    this.set_html = function(html) {
-        this.html = html;
+    this.set_project = function(project) {
+        this.project = project;
     };
 
     this.add_var = function(key, val) {
@@ -79,10 +72,6 @@ function MailSend() {
 
     this.add_link = function(key, val) {
         this.links[key] = val;
-    };
-
-    this.add_attachment = function(attachment) {
-        this.attachments.push(attachment);
     };
 
     this.add_headers = function(key, val) {
@@ -143,11 +132,8 @@ function MailSend() {
         if (this.subject != '') {
             params['subject'] = this.subject;
         }
-        if (this.text != '') {
-            params['text'] = this.text;
-        }
-        if (this.html != '') {
-            params['html'] = this.html;
+        if (this.project != '') {
+            params['project'] = this.project;
         }
         if (this.vars.length > 0) {
             params['vars'] = JSON.stringify(this.vars);
@@ -158,24 +144,13 @@ function MailSend() {
         if (this.headers.length > 0) {
             params['headers'] = JSON.stringify(this.headers);
         }
-        if (this.attachments.length > 0) {
-            if (this.attachments.length == 1) {
-                params['attachments'] = [fs.createReadStream(this.attachments[0])];
-            } else {
-                var array = [];
-                for (index in this.attachments) {
-                    array.push(fs.createReadStream(this.attachments[index]));
-                }
-                params['attachments[]'] = array;
-            }
-        }
         return params;
     };
-    this.send = function() {
+    this.xsend = function() {
         var mail = new Mail();
         console.log(this.build_params());
-        mail.send(this.build_params());
+        mail.xsend(this.build_params());
     }
 };
 
-module.exports = MailSend;
+module.exports = MailXSend;

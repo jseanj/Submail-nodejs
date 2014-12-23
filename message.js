@@ -2,13 +2,13 @@ var request = require('request');
 var crypto = require('crypto');
 var config = require('./config.js');
 
-function Mail() {
-    this.appid = config.mailConfig.appid;
-    this.signtype = config.mailConfig.signtype;
-    this.appkey = config.mailConfig.appkey;
+function Message() {
+    this.appid = config.messageConfig.appid;
+    this.signtype = config.messageConfig.signtype;
+    this.appkey = config.messageConfig.appkey;
     this.send = function(params) {
         console.log(params);
-        var api = 'https://api.submail.cn/mail/send.json';
+        var api = 'https://api.submail.cn/message/send.json';
         var requestParams = params;
         requestParams['appid'] = this.appid;
         var self = this;
@@ -31,7 +31,7 @@ function Mail() {
     };
     this.xsend = function(params) {
         console.log(params);
-        var api = 'https://api.submail.cn/mail/xsend.json';
+        var api = 'https://api.submail.cn/message/xsend.json';
         var requestParams = params;
         requestParams['appid'] = this.appid;
         var self = this;
@@ -54,7 +54,7 @@ function Mail() {
     };
     this.subscribe = function(params) {
         console.log(params);
-        var api = 'https://api.submail.cn/addressbook/mail/subscribe.json';
+        var api = 'https://api.submail.cn/addressbook/message/subscribe.json';
         var requestParams = params;
         requestParams['appid'] = this.appid;
         var self = this;
@@ -77,7 +77,7 @@ function Mail() {
     };
     this.unsubscribe = function(params) {
         console.log(params);
-        var api = 'https://api.submail.cn/addressbook/mail/unsubscribe.json';
+        var api = 'https://api.submail.cn/addressbook/message/unsubscribe.json';
         var requestParams = params;
         requestParams['appid'] = this.appid;
         var self = this;
@@ -146,5 +146,4 @@ function Mail() {
     };
 };
 
-
-module.exports = Mail;
+module.exports = Message;
